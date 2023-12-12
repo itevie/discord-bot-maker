@@ -1,0 +1,5 @@
+{
+  "action_palette": {
+    "edit_event": "Edituj udalosť: $t(event_names.{{event_name}})"
+  }
+}

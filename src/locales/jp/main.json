@@ -1,0 +1,14 @@
+{
+  "navbar": {
+    "tooltips": {
+      "home": "家"
+    }
+  },
+  "page": {
+    "app_settings": {
+      "language": {
+        "header": "言語"
+      }
+    }
+  }
+}

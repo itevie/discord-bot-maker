@@ -1,0 +1,6 @@
+{
+  "window": {
+    "title": "Editing {{edit_type}} {{edit_name}} (autosaves)"
+  },
+  "please_wait": "Please wait, the editor is loading..."
+}

@@ -1,0 +1,55 @@
+@use "util";
+@use "colors" as colors;
+
+$navbar-size: 48px;
+$navbar-icon-size: 2.5em;
+$navbar-size-expanded: 256px;
+
+// ----- Navigation Bar -----
+
+.navbar {
+  width: $navbar-size;
+  
+  background-color: colors.color("navbar");
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navbar::-webkit-scrollbar {
+  display: none;
+}
+
+.navbar-bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.navbar-rule {
+  border-style: none;
+}
+
+// ----- Top Bar -----
+.topbar {
+  height: $navbar-size;
+  background-color: colors.color("navbar");
+  display: flex;
+}
+
+.topbar-content {
+  @include util.no-select;
+  flex: 1;
+}
+
+#bot-name {
+  color: colors.color("icon");
+  font-size: 1.7em;
+  padding: 8px;
+  display: block;
+}
+
+.topbar-icons {
+  display: flex;
+}

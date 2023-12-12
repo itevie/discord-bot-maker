@@ -1,0 +1,29 @@
+$navbar: var(--color-navbar);
+$icon: var(--color-icon);
+
+:root {
+  // Basic colors
+  --color-navbar: #111;
+  --color-main: #222;
+  --color-text: white;
+  --color-container: #333;
+  --color-container-2: #444;
+
+  // Icon colors
+  --color-icon: #fff;
+  --color-icon-hover: #333;
+  --color-icon-selected: #444;
+
+  // Elements
+  --color-foreground-element: #111;
+  --color-foreground-element-focus: #181818;
+  --color-foreground-element-hover: #131313;
+
+  // Accent Colors
+  --color-danger: #940000;
+  --color-success: #009c00;
+}
+
+@function color($name) {
+  @return var(--color-#{$name});
+}

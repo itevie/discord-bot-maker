@@ -1,0 +1,15 @@
+{
+  "include": [ "./ts" ],
+  "exclude": [ "./lib" ],
+  "compilerOptions": {
+    "outDir": "./js",
+    "target": "ESNext",
+    "allowJs": true,
+    "module": "ESNext",
+    "types": [],
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "monaco": ["./ts/fool.ts"]
+    }
+  },
+}

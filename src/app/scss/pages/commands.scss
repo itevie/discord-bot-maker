@@ -1,0 +1,48 @@
+@use "../colors.scss";
+@use "../util.scss";
+
+.commands-page-container-container {
+  height: 100%;
+}
+
+.commands-page-container {
+  height: 100%;
+  display: flex;
+}
+
+.commands-list {
+  @include util.no-select;
+
+  box-sizing: border-box;
+  height: 100%;
+  width: 200px;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background-color: colors.color(navbar);
+}
+
+.command-item {
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  transition: 0.3s
+}
+
+.command-item:hover {
+  background-color: colors.color(icon-hover)
+}
+
+.command-folder {
+  text-decoration: underline;
+}
+
+.command-item-folder > label:not(:nth-child(1)) {
+  margin-left: 10px;
+}
+
+.commands-content {
+  flex: 1;
+  margin: 10px;
+}

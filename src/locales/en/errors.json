@@ -1,0 +1,11 @@
+{
+  "----- Language Lexer Errors -----": "",
+  "ELL0": "An unknown error occurred",
+  "ELL1": "The string was not closed",
+  "ELL2": "An unrecoginised character was found: {{character}}",
+
+  "----- Language Parser Errors -----": "",
+  "ELP0": "An unknown error occurred",
+  "ELP1": "Unexpected token was found: $t(language:{{token_name}})",
+  "ELP2": "Expected token of type $t(language:{{expected}}), but got token of type $t(language:{{got}})"
+}

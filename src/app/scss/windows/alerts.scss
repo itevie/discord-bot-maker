@@ -1,0 +1,37 @@
+@use "../colors.scss";
+
+body {
+  background-color: colors.color(main);
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  box-sizing: border-box;
+  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+#alert-title {
+  font-weight: bolder;
+  font-size: 2em;
+  display: block;
+}
+
+#alert-contents {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  display: block;
+  flex: 1;
+  overflow-y: auto;
+}

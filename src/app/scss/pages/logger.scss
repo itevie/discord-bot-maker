@@ -1,0 +1,20 @@
+.logger-container-container {
+  background-color: black;
+
+  font-family: monospace;
+  
+  padding: 5px;
+  margin: -20px;
+  height: calc(100vh - 80px); 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.logger-container > label {
+  display: block;
+  overflow-wrap: break-word;
+}
+
+.logger-log-type {
+  color: gray;
+}

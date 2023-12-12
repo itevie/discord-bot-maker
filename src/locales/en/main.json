@@ -1,0 +1,90 @@
+{
+  "page": {
+    "home": {
+      "header": "DBM"
+    },
+    "repl": {
+      "header": "Language Test",
+      "description": "This page aids to quickly test features about the built-in language and any plugins that are installed. Note: magic values such as \"message\" are not available here.",
+      "input": {
+        "placeholder": "Your code..."
+      }
+    },
+    "bot_selection": {
+      "header": "Your Bots",
+      "button": {
+        "create_new": "Create New Bot",
+        "start_bot": "Start {{bot_name}}",
+        "stop_bot": "Stop {{bot_name}}",
+        "restart_bot": "Restart {{bot_name}}"
+      }
+    },
+    "app_settings": {
+      "header": "Application Settings",
+      "language": {
+        "header": "Language"
+      },
+      "debug": {
+        "header": "Debug",
+        "enable_debug": "Enable debug mode?"
+      }
+    },
+    "plugins": {
+      "notice": "Note that this does not display all avaiable values, some values are event-specific, such as message.",
+      "search": {
+        "placeholder": "Search installed plugins..."
+      }
+    },
+    "bot_creation": {
+      "header": "Create a new bot",
+      "para1": "Let's get your bot created! Fill out the following fields to get started:",
+      "basic_info": "Basic Information",
+      "bot_name": "Bot Name:",
+      "bot_token": "Bot Token:",
+      "button": {
+        "create": "Create Bot"
+      }
+    }
+  },
+  "topbar": {
+    "tooltips": {
+      "current_bot": "Your currently selected bot",
+      "stop_bot": "Stop Bot",
+      "start_bot": "Start Bot",
+      "restart_bot": "Restart Bot"
+    }
+  },
+  "navbar": {
+    "tooltips": {
+      "app_settings": "Applicaton Settings",
+      "commands": "Commands",
+      "events": "Events",
+      "home": "Home",
+      "bot_settings": "Bot Settings",
+      "view_log": "View Log",
+      "change_selected_bot": "Change The Selected Bot",
+      "plugins": "Plugins",
+      "database": "Database",
+      "errors": "Errors"
+    }
+  },
+  "statusbar": {
+    "bot": {
+      "running": "{{bot_name}} is running",
+      "not_running": "{{bot_name}} is not running"
+    }
+  },
+  "action_palette": {
+    "query": {
+      "placeholder": "Search actions..."
+    },
+    "open_page": "Open: {{name}}",
+    "edit_event": "Edit event: $t(event_names.{{event_name}})",
+    "reload": "Reload",
+    "start_current_bot": "Start Current Bot",
+    "restart_current_bot": "Restart Current Bot",
+    "change_language": "Change language to: $t(lang.{{language_name}})",
+    "no_results": "No results...",
+    "repl_page": "Test out the language (REPL mode)..."
+  }
+}

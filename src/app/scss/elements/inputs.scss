@@ -1,0 +1,26 @@
+@use "../colors.scss";
+
+input {
+  outline: none;
+  background-color: colors.color(foreground-element);
+  color: colors.color(text);
+  transition: 0.3s;
+}
+
+input:hover {
+  background-color: colors.color(foreground-element-hover);
+}
+
+input:focus {
+  background-color: colors.color(foreground-element-focus);
+}
+
+input.jumbo {
+  padding: 15px;
+  width: 100%;
+
+  border: none;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}

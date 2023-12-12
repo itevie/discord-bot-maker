@@ -1,0 +1,22 @@
+@use "../colors.scss";
+@use "../action_palette.scss";
+
+body {
+  background-color: colors.color(main);
+  overflow: hidden;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.editor-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.editor-container-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}

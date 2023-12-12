@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+
+  <!-- Internal CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Internal Scripts -->
+  <script src="../js/main.js" type="module"></script>
+</head>
+<body>
+  <!-- Action Palette -->
+  <div id="action-palette" style="display: none">
+    <div class="action-palette-dim"></div>
+    <div class="action-palette">
+      <input class="input jumbo" id="action-palette-input" data-i18n-placeholder="main:action_palette.query.placeholder">
+      <div class="action-palette-results" id="action-palette-results">
+        
+      </div>
+    </div>
+  </div>
+  <div class="root">
+    <div class="navbar">
+      <!-- Navbar Icons Top -->
+      <div>
+        <div class="icon" data-i18n-title="navbar.tooltips.home" data-div-changer="home" data-div-navbar>
+          <span class="material-symbols-outlined">
+            home
+          </span>
+        </div>
+      </div>
+      <!-- Navbar Icons Center -->
+      <div>
+        <hr class="navbar-rule">
+        <div class="icon" data-i18n-title="navbar.tooltips.commands" data-div-navbar data-div-changer="commands">
+          <span class="material-symbols-outlined">
+            code
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.events" data-div-navbar data-div-changer="events">
+          <span class="material-symbols-outlined">
+            event
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.database" data-div-navbar data-div-changer="database">
+          <span class="material-symbols-outlined">
+            database
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.bot_settings" data-div-changer="bot-settings" data-div-navbar>
+          <span class="material-symbols-outlined">
+            settings
+          </span>
+        </div>
+        <hr class="navbar-rule">
+      </div>
+      <!-- Navbar Icons Bottom -->
+      <div class="navbar-bottom2">
+        <div class="icon" data-i18n-title="navbar.tooltips.plugins" data-div-changer="plugins" data-div-navbar>
+          <span class="material-symbols-outlined">
+            extension
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.change_selected_bot" data-div-changer="bot-selection" data-div-navbar>
+          <span class="material-symbols-outlined">
+            smart_toy
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.errors" data-div-changer="errors" data-div-navbar>
+          <span class="material-symbols-outlined">
+            error
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.view_log" data-div-changer="app-logger" data-div-navbar>
+          <span class="material-symbols-outlined">
+            terminal
+          </span>
+        </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.app_settings" data-div-changer="app-settings" data-div-navbar>
+          <span class="material-symbols-outlined">
+            settings
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="topbar">
+        <!-- Topbar Content -->
+        <div class="topbar-content">
+          <label id="bot-name" data-current-bot="name" data-i18n-title="topbar.tooltips.current_bot"></label>
+        </div>
+        <!-- Topbar Icons -->
+        <div class="topbar-icons">
+          <div class="bg-hover-danger icon replay-icon" id="restart-current-bot-ion" data-i18n-title="topbar.tooltips.restart_bot" data-current-bot="show-if-running" data-current-bot-display="inline">
+            <span class="material-symbols-outlined">
+              replay
+            </span>
+          </div>
+          <div class="icon bg-hover-success" id="start-current-bot-icon" data-i18n-title="topbar.tooltips.start_bot" data-current-bot="hide-if-running" data-current-bot-display="inline">
+            <span class="material-symbols-outlined">
+              play_arrow
+            </span>
+          </div>
+          <div class="icon bg-hover-danger" data-i18n-title="topbar.tooltips.stop_bot" data-current-bot="show-if-running" data-current-bot-display="inline">
+            <span class="material-symbols-outlined">
+              stop
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Main Divs -->
+      <div id="main-content" class="main-content">
+        <!-- Home -->
+        <div data-div-id="home">
+          <h1 data-i18n-text="page.home.header"></h1>
+        </div>
+
+        <!-- REPL -->
+        <div data-div-id="repl">
+          <h1 data-i18n-text="page.repl.header"></h1>
+          <p data-i18n-text="page.repl.description"></p>
+          <input spellcheck="false" id="repl-input" class="input jumbo" data-i18n-placeholder="page.repl.input.placeholder">
+          <pre class="repl-result" id="repl-result"></pre>
+        </div>
+
+        <!-- Bot Settings -->
+        <div data-div-id="bot-settings">
+          <h1 data-i18n-text="page.bot_settings.header"></h1>
+        </div>
+
+        <!-- Commands -->
+        <div data-div-id="commands" class="commands-page-container-container">
+          <div class="commands-page-container">
+            <div class="commands-list">
+              <label class="command-item">Command 1</label>
+              <label class="command-item">Command 2</label>
+              <label class="command-item">Command 33333333</label>
+              <div class="command-item-folder">
+                <label class="command-item command-folder">Folder Name</label>
+                <label class="command-item">Command 69</label>
+                <label class="command-item">Command 420</label>
+                <label class="command-item">Command 69420</label>
+              </div>
+              <label class="command-item">Command owo</label>
+            </div>
+            <div class="commands-content">
+              <label id="current-command-name" class="header">command_name</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div data-div-id="events" class="commands-page-container-container">
+          <div class="commands-page-container">
+            <div class="commands-list" id="events-list">
+            </div>
+            <div class="commands-content">
+              <label id="current-event-name" class="header"></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Database -->
+        <div data-div-id="database">
+          <h1 data-i18n-text="page.database.header"></h1>
+        </div>
+
+        <!-- Plugins -->
+        <div data-div-id="plugins">
+          <input type="text" class="jumbo" data-i18n-placeholder="page.plugins.search.placeholder" id="plugin-search">
+          <i class="plugin-notice" data-i18n-text="page.plugins.notice"></i>
+          <div class="plugin-container" id="plugin-container">
+          </div>
+        </div>
+
+        <!-- App Logger -->
+        <div data-div-id="app-logger" class="logger-container-container">
+          <div class="logger-container" id="logger-container">
+          </div>
+        </div>
+
+        <!-- Errors -->
+        <div data-div-id="errors">
+          <h1 data-i18n-text="page.errors.header"></h1>
+          <p data-i18n-text="page.errors.information"></p>
+          <div class="errors-list-container">
+            <div class="error-item">
+              <label class="error-header">Language Error (events:messageCreate)</label>
+              <label class="error-content">Lorem ipsum dolar sit amet, consecuter your mother is gay</label>
+              <div class="error-actions">
+                <button>Open Editor</button>
+                <button>Delete Error</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- App Settings -->
+        <div data-div-id="app-settings" >
+          <h1 data-i18n-text="page.app_settings.header"></h1>
+          <div>
+            <h2 data-i18n-text="page.app_settings.theme.header"></h2>
+            <label data-i18n-text="page.app_settings.theme.app_theme"></label><br>
+            <label data-i18n-text="page.app_settings.theme.editor_theme" data-i18n-title="page.app-settings.theme.tooltips.editor_theme"></label>
+          </div>
+          <div>
+            <h2 data-i18n-text="page.app_settings.language.header"></h2>
+            <select id="app-settings-language-select">
+            </select>
+          </div>
+          <div>
+            <h2 data-i18n-text="page.app_settings.debug.header"></h2>
+            <div class="checkbox-label">
+              <input type="checkbox">
+              <label data-i18n-text="page.app_settings.debug.enable_debug"></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bot Selection -->
+        <div data-div-id="bot-selection">
+          <div class="bot-selection-top">
+            <label class="header" data-i18n-text="page.bot_selection.header"></label>
+            <div id="create-bot-button" class="icon bg-hover-success" data-i18n-title="page.bot_selection.button.create_new">
+              <span class="material-symbols-outlined">
+                add
+              </span>
+            </div>
+          </div>
+          <table id="bot-list"></table>
+        </div>
+      </div>
+      <div class="status-bar">
+        <label id="status_bar-bot_running"></label>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

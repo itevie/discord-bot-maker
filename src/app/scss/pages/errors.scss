@@ -1,0 +1,30 @@
+@use "../colors.scss";
+
+.errors-list-container {
+  border-radius: 10px;
+}
+
+.error-item {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: inherit;
+  background-color: colors.color(container);
+}
+
+.error-header {
+  display: block;
+  font-size: 1.5em;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.error-actions {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: colors.color(container-2);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+

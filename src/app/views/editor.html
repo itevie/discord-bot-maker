@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editing</title>
+  <link rel="stylesheet" href="../css/editor.css">
+  <script type="module" src="../js/windows/editor.js"></script>
+</head>
+<body>
+  <!-- Action Palette -->
+  <div id="action-palette" style="display: none">
+    <div class="action-palette-dim"></div>
+    <div class="action-palette">
+      <input class="input jumbo" id="action-palette-input" data-i18n-placeholder="main:action_palette.query.placeholder">
+      <div class="action-palette-results" id="action-palette-results">
+        
+      </div>
+    </div>
+  </div>
+  <div class="editor-container-loading" data-i18n-text="please_wait">
+    
+  </div>
+  <div class="editor-container" id="editor-container">
+  </div>
+  <script src="../lib/monaco-editor-0.45.0/package/min/vs/loader.js"></script>
+</body>
+<script>
+  window.require = require;
+
+  require.config({ paths: { vs: '../lib/monaco-editor-0.45.0/package/min/vs' } });
+  require(['vs/editor/editor.main'], function () {
+    window.monaco = monaco;
+  });
+</script>
+</html>

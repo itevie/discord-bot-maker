@@ -1,0 +1,75 @@
+@use "navbar";
+@use "icons";
+@use "colors";
+@use "action_palette.scss";
+@use "pages/logger.scss";
+@use "pages/bot-selection.scss";
+@use "pages/plugin-page.scss";
+@use "pages/commands.scss";
+@use "util";
+@use "elements/inputs.scss";
+@use "pages/errors.scss";
+
+body {
+  overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  font-family: Arial, Helvetica, sans-serif;
+  color: colors.color(text);
+}
+
+.root {
+  height: 100vh;
+  width: 100vw;
+  background-color: colors.color(navbar);
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content {
+  background-color: colors.color(main);
+  border-top-left-radius: 10px;
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+[data-div-id] {
+  display: none;
+}
+
+.status-bar {
+  height: 22px;
+  background-color: colors.color(navbar);
+}
+
+#bot-list > tr {
+  box-sizing: border-box;
+  min-height: 32px;
+  height: 32px;
+  max-height: 32px;
+}
+
+.header {
+  @include util.no-select;
+  margin: 10px;
+  font-weight: bolder;
+  font-size: 2em;
+}
+
+.block {
+  display: block;
+}
+
+.repl-result {
+  background-color: colors.color(container);
+  padding: 10px;
+  border-radius: 10px;
+}

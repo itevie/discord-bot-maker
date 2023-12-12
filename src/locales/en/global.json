@@ -1,0 +1,49 @@
+{
+  "event_names": {
+    "messageCreate": "Message Create",
+    "message_create": "$t(messageCreate)",
+
+    "messageEdit": "Message Edit"
+  },
+  "lang": {
+    "en": "English",
+    "sk": "Slovak (test)",
+    "jp": "Japanese (test)"
+  },
+  "alerts": {
+    "title": {
+      "error": "Error",
+      "info": "Information",
+      "warning": "Warning",
+      "confirm": "Are you sure?"
+    }
+  },
+  "plugins": {
+    "info": {
+      "author": "Author: {{author}}",
+      "version": "Version: {{version}}",
+      "language_features": "Language Features:",
+      "use_in_code": "Use in code: {{chain}}"
+    }
+  },
+  "time": {
+    "pretty": "{{days}} {{hours}} {{minutes}} {{seconds}}",
+    "units": {
+      "day_zero": "",
+      "day_one": "1 day",
+      "day_other": "{{count}} days",
+
+      "hour_zero": "",
+      "hour_one": "1 hour",
+      "hour_other": "{{count}} hours",
+
+      "minute_zero": "",
+      "minute_one": "1 minute",
+      "minute_other": "{{count}} minutes",
+
+      "second_zero": "",
+      "second_one": "1 second",
+      "second_other": "{{count}} seconds"
+    }
+  }
+}

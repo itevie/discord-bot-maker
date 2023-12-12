@@ -1,0 +1,54 @@
+@use "util";
+@use "colors";
+
+$icon-size: 48px;
+$icon-text-size: 2.5em;
+
+$icon-size-small: 28px;
+$icon-text-size-small: 1.6em;
+
+.icon > span {
+  @include util.no-select;
+
+  padding: 3px;
+  box-sizing: border-box;
+  width: $icon-size;
+  height: $icon-size;
+  font-size: $icon-text-size;
+  color: colors.color("icon");
+  transition: 0.2s;
+}
+
+.navbar-selected {
+  background-color: colors.color("icon-selected");
+}
+
+.icon:not(.navbar-selected) > span:hover{
+  background-color: colors.color("icon-hover");
+}
+
+.icon.bg-hover-danger:not(.navbar-selected) > span:hover {
+  background-color: colors.color("danger");
+}
+
+.icon.bg-hover-success > span:hover {
+  background-color: colors.color("success");
+}
+
+.icon-small > span {
+  width: $icon-size-small;
+  height: $icon-size-small;
+  font-size: $icon-text-size-small;
+  border-radius: 10px;
+  padding: 1px;
+}
+
+.icon-small.replay-icon > span {
+  font-size: calc($icon-text-size-small - 0.3em);
+  padding: 3px;
+}
+
+.replay-icon > span {
+  font-size: calc($icon-text-size - 0.3em);
+  padding: 6px;
+}

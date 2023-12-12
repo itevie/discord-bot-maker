@@ -1,0 +1,53 @@
+@use "./colors.scss";
+@use "./elements/inputs.scss";
+
+.action-palette {
+  position: absolute;
+  width: 50vw;
+  left: 50%;
+  transform: translate(-50%);
+  top: 70px;
+  height: 100vw;
+  z-index: 1000;
+  color: colors.color(text)
+}
+
+.action-palette > input {
+  box-shadow: 0px 0px 10px 3px black;
+}
+
+.action-palette-results {
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px 3px black;
+  background-color: colors.color(foreground-element);
+  border-radius: 3px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.action-palette-result {
+  padding: 5px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.action-palette-result > * {
+  cursor: pointer;
+}
+
+.action-palette-result:hover {
+  background-color: colors.color(foreground-element-hover);
+}
+
+.action-palette-result:active {
+  background-color: colors.color(foreground-element-focus);
+}
+
+.action-palette-dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000022;
+}

@@ -1,0 +1,1 @@
+sass --watch scss/main.scss:css/main.css scss/windows/editor.scss:css/editor.css scss/windows/alerts.scss:css/alerts.css
