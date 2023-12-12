@@ -18,7 +18,11 @@ At the moment, the application is being heavily worked on and not everything wil
 If you have any suggestions, or find any issues, please tell me about them so I can quickly solve them. You can either create an issue on GitHub, or message me on Discord: @iteve
 
 ## How to use it
-At the moment, there is no exactly easy way to start this application. However, the following may work:
+At the moment, the only way to start the application is by either:
+
+If your on windows, running setup.bat, then running `npm run start`
+
+Or:
 
 1. Download the project as a ZIP and extract it into a folder
 2. Make sure node.js is installed on your computer
