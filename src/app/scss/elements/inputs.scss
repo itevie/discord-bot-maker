@@ -1,10 +1,15 @@
 @use "../colors.scss";
+@use 'sass:color';
 
-input {
+input, button {
   outline: none;
   background-color: colors.color(foreground-element);
   color: colors.color(text);
   transition: 0.3s;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
 }
 
 input:hover {
@@ -15,7 +20,7 @@ input:focus {
   background-color: colors.color(foreground-element-focus);
 }
 
-input.jumbo {
+input.jumbo, button.jumbo {
   padding: 15px;
   width: 100%;
 
@@ -23,4 +28,16 @@ input.jumbo {
   border-radius: 10px;
 
   box-sizing: border-box;
+}
+
+.primary {
+  background-color: colors.color(primary);
+}
+
+.primary:hover {
+  box-shadow: 0px 0px 10px 1px black;
+}
+
+.primary:focus {
+  background-color: colors.color(primary-dark);
 }

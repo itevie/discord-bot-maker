@@ -44,6 +44,12 @@
       "button": {
         "create": "Create Bot"
       }
+    },
+    "welcome": {
+      "header": "Welcome to DBM!",
+      "introduction": "We're glad to see you! DBM is an application that is allows you to simply, and easily create Discord bots!",
+      "guide1": "To get started with the application, we need to create a bot! Please read the following on how to do that!",
+      "incomplete_warning": "! Note that this application is NOT complete and is no where near stability yet, so please, for now, don't use this application for serious purposes. !"
     }
   },
   "topbar": {
@@ -85,6 +91,7 @@
     "restart_current_bot": "Restart Current Bot",
     "change_language": "Change language to: $t(lang.{{language_name}})",
     "no_results": "No results...",
-    "repl_page": "Test out the language (REPL mode)..."
+    "repl_page": "Test out the language (REPL mode)...",
+    "change_bot": "Select bot: {{bot_name}}"
   }
 }

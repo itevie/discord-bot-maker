@@ -1,10 +1,10 @@
 import fs from "fs";
 import {BrowserWindow, ipcMain} from 'electron';
 import * as database from "./database";
-import { getRunningBotList, startBot, stopBot } from './runner';
+import { createBot, getRunningBotList, startBot, stopBot } from './runner';
 import Logger from "./Logger";
-import { knownEvents } from "./discord/handle";
-import { loadEventEditor } from "./editor";
+import handle, { knownEvents } from "./discord/handle";
+import { closeAllWindows, loadEventEditor } from "./editor";
 import plugins, { locale } from "./plugin_manager";
 import path from "path";
 import execute from "./language/executor";
@@ -14,6 +14,9 @@ import Environment from "./language/runtime/Environment";
 import RuntimeError from "./language/runtime/RuntimeError";
 import ParserError from "./language/parser/ParseError";
 import LexerError from "./language/lexer/LexerError";
+import { handleError } from "./errors/helpers";
+import { reloadAllWindows } from "./helpers";
+import ApplicationError from "./errors/ApplicationError";
 const logger = new Logger("ipc");
 
 // ----- IPC Events -----
@@ -36,10 +39,18 @@ ipcMain.on("db:get-bot-list", (event, data) => {
 
 // ----- Bot Events -----
 ipcMain.on("bot:restart-current-bot", (event, data) => {
-  stopBot("gay");
+  stopBot(database.getCurrentBot().name);
 
   setTimeout(() => {
-    startBot("gay");
+    startBot(database.getCurrentBot().name);
+  }, 2000);
+});
+
+ipcMain.on("bot:restart-bot", (event, data: string) => {
+  stopBot(data);
+
+  setTimeout(() => {
+    startBot(data);
   }, 2000);
 });
 
@@ -47,22 +58,51 @@ ipcMain.on("bot:start-current-bot", (event, data) => {
   startBot(database.getCurrentBot().name);
 });
 
+ipcMain.on("bot:start-bot", (event, data: string) => {
+  startBot(data);
+});
+
 ipcMain.on("bot:get-current-bot", (event, data) => {
-  let currentBot = database.data.selectedBot;
+  let currentBot = database.getCurrentBot();
 
   // Check if there is a selected bot
   if (!currentBot)
     return event.returnValue = null; 
   
-  // Get bot and send it
-  let bot = database.data.bots[currentBot];
+  event.returnValue = currentBot;
+});
 
-  event.returnValue = bot;
+ipcMain.on("bot:name-exists", (event, data) => {
+  event.returnValue = database.data.bots.hasOwnProperty(data);
+});
+
+ipcMain.on("bot:create", (event, data: {name: string, token: string}) => {
+  createBot(data.name, data.token).then(() => {
+    logger.log(`Bot successfully created`);
+    __app.getWindow().reload();
+  }).catch(err => {
+    handleError(err);
+  });
+});
+
+ipcMain.on("bot:change-selected", (event, data: string) => {
+  if (database.getCurrentBot().name == data) return;
+  if (!database.data.bots.hasOwnProperty(data))
+    return handleError(new ApplicationError("EA4", {bot_name: data}));
+  closeAllWindows();
+  database.data.selectedBot = data;
+  __app.getWindow().reload();
 });
 
 ipcMain.on("get-page", (event, name: string) => {
   let fileName = `${__dirname}/${__app.baseDirectory}/app/views/pages/${name}.html`;
   logger.log(`Attempting to load page: ${fileName}`);
+  event.returnValue = fs.readFileSync(fileName, "utf-8");
+});
+
+ipcMain.on("get-modal", (event, name: string) => {
+  let fileName = `${__dirname}/${__app.baseDirectory}/app/views/modals/${name}.html`;
+  logger.log(`Attempting to load modal: ${fileName}`);
   event.returnValue = fs.readFileSync(fileName, "utf-8");
 });
 
@@ -137,11 +177,7 @@ ipcMain.on("i18n:get-current-language", (event, data) => {
 ipcMain.on("i18n:set-current-language", (event, data: string) => {
   database.data.settings.language = data;
 
-  let windows = BrowserWindow.getAllWindows();
-  
-  for (const window of windows) {
-    window.webContents.reloadIgnoringCache();
-  }
+  reloadAllWindows();
 
   event.returnValue = null;
 })

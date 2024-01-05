@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $navbar: var(--color-navbar);
 $icon: var(--color-icon);
 
@@ -20,6 +22,8 @@ $icon: var(--color-icon);
   --color-foreground-element-hover: #131313;
 
   // Accent Colors
+  --color-primary: #5865F2;
+  --color-primary-dark: #{color.adjust(#5865F2, $lightness: -3%)};
   --color-danger: #940000;
   --color-success: #009c00;
 }

@@ -69,6 +69,17 @@ function loadActions() {
             priority: -5,
         });
     }
+    // Load change bots
+    const bots = ipc.getBotList();
+    for (const bot of bots) {
+        actions.push({
+            name: translateKey(`main:action_palette.change_bot`, { bot_name: bot.name }),
+            action: () => {
+                ipc.changeSelectedBot(bot.name);
+            },
+            priority: 0,
+        });
+    }
     actions = actions.sort((a, b) => (b.priority || 0) - (a.priority || 0) || a.name.localeCompare(b.name));
 }
 export default function init() {

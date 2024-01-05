@@ -35,9 +35,14 @@
             home
           </span>
         </div>
+        <div class="icon" data-i18n-title="navbar.tooltips.welcome" data-div-changer="welcome" data-div-navbar style="display: none">
+          <span class="material-symbols-outlined">
+            waving_hand
+          </span>
+        </div>
       </div>
       <!-- Navbar Icons Center -->
-      <div>
+      <div id="bot-specific-navbar">
         <hr class="navbar-rule">
         <div class="icon" data-i18n-title="navbar.tooltips.commands" data-div-navbar data-div-changer="commands">
           <span class="material-symbols-outlined">
@@ -97,7 +102,7 @@
           <label id="bot-name" data-current-bot="name" data-i18n-title="topbar.tooltips.current_bot"></label>
         </div>
         <!-- Topbar Icons -->
-        <div class="topbar-icons">
+        <div class="topbar-icons" id="topbar-icons">
           <div class="bg-hover-danger icon replay-icon" id="restart-current-bot-ion" data-i18n-title="topbar.tooltips.restart_bot" data-current-bot="show-if-running" data-current-bot-display="inline">
             <span class="material-symbols-outlined">
               replay
@@ -236,8 +241,17 @@
           </div>
           <table id="bot-list"></table>
         </div>
+
+        <!-- Welcome Page -->
+        <div data-div-id="welcome">
+          <h1 data-i18n-text="page.welcome.header"></h1>
+          <p data-i18n-text="page.welcome.introduction"></p>
+          <p data-i18n-text="page.welcome.guide1"></p>
+          <p data-i18n-text="page.welcome.incomplete_warning"></p>
+          <button id="welcome-page-create-bot" data-i18n-text="page.welcome.create_bot_button" class="jumbo primary"></button>
+        </div>
       </div>
-      <div class="status-bar">
+      <div class="status-bar" id="status-bar">
         <label id="status_bar-bot_running"></label>
       </div>
     </div>

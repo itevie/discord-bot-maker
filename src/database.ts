@@ -57,7 +57,7 @@ export function getBot(botName: string): Bot {
   return data.bots[botName];
 } 
 
-export function getCurrentBot(): Bot {
+export function getCurrentBot(): Bot | undefined {
   return data.bots[data.selectedBot];
 }
 

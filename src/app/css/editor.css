@@ -10,15 +10,21 @@
   --color-foreground-element: #111;
   --color-foreground-element-focus: #181818;
   --color-foreground-element-hover: #131313;
+  --color-primary: #5865F2;
+  --color-primary-dark: #4a58f1;
   --color-danger: #940000;
   --color-success: #009c00;
 }
 
-input {
+input, button {
   outline: none;
   background-color: var(--color-foreground-element);
   color: var(--color-text);
   transition: 0.3s;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
 }
 
 input:hover {
@@ -29,12 +35,24 @@ input:focus {
   background-color: var(--color-foreground-element-focus);
 }
 
-input.jumbo {
+input.jumbo, button.jumbo {
   padding: 15px;
   width: 100%;
   border: none;
   border-radius: 10px;
   box-sizing: border-box;
+}
+
+.primary {
+  background-color: var(--color-primary);
+}
+
+.primary:hover {
+  box-shadow: 0px 0px 10px 1px black;
+}
+
+.primary:focus {
+  background-color: var(--color-primary-dark);
 }
 
 .action-palette {

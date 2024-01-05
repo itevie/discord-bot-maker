@@ -9,6 +9,15 @@ const ErrorCode = {
   unexpectedToken: "ELP1",
   expectedDifferentToken: "ELP2",
   expectedNewLine: "ELP3",
+
+  // ----- Runtime -----
+  unknownRuntimeError: "ELR0",
+  invalidAssignment: "ELR1",
+  invalidRightMemberExpression: "ELR2",
+  invalidMemberExpressionAccessee: "ELR3",
+  invalidTypeCall: "ELR4",
+  undeclaredVariable: "ELR5",
+  unknownAst: "ELR6",
 } as const;
 
 export default ErrorCode;

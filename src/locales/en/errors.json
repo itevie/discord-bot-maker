@@ -1,4 +1,8 @@
 {
+  "helpers": {
+    "dangerous_error": "Dangerous Error"
+  },
+
   "----- Language Lexer Errors -----": "",
   "ELL0": "An unknown error occurred",
   "ELL1": "The string was not closed",
@@ -7,5 +11,21 @@
   "----- Language Parser Errors -----": "",
   "ELP0": "An unknown error occurred",
   "ELP1": "Unexpected token was found: $t(language:{{token_name}})",
-  "ELP2": "Expected token of type $t(language:{{expected}}), but got token of type $t(language:{{got}})"
+  "ELP2": "Expected token of type $t(language:{{expected}}), but got token of type $t(language:{{got}})",
+
+  "----- Application Errors -----": "",
+  "EA0": "The bot {{bot_name}} already exists",
+  "EA1": "Unknown error occurred: {{error_message}}",
+  "EA2": "The token is invalid",
+  "EA3": "An unknown error occurred, please check the log",
+  "EA4": "Could not switch to the bot as it does not exist",
+
+  "----- Runtime Errors -----": "",
+  "ELR0": "An unknown error occurred",
+  "ELR1": "Can only assign to an identifier",
+  "ELR2": "Cannot access an object like this",
+  "ELR3": "Cannot access a $t(language:{{left}})",
+  "ELR4": "Can only call functions, but got $t(language:{{type}})",
+  "ELR5": "Attempt to access an undeclared variable: {{name}}",
+  "ELR6": "Unknown ast node: {{node}}"
 }

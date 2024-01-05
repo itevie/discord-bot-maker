@@ -10,6 +10,8 @@
   --color-foreground-element: #111;
   --color-foreground-element-focus: #181818;
   --color-foreground-element-hover: #131313;
+  --color-primary: #5865F2;
+  --color-primary-dark: #4a58f1;
   --color-danger: #940000;
   --color-success: #009c00;
 }

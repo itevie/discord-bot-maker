@@ -36,15 +36,24 @@ export interface Events {
   "app-ready": (data: null) => void;
   "identify": (data: any) => void;
   "editor-error": (data: DError) => void;
+  "alerts:uncaught_error": (data: {error_code: string, stack: string}) => void;
+  "alerts:unknown_uncaught_error": (data: {message: string, stack: string}) => void;
+  "alerts:uncaught_language_error": (data: DError) => void;
 }
 
 interface IpcApi {
   getBotList: () => RunningBotItem[];
   getCurrentBot: () => Bot;
   restartCurrentBot: () => void;
+  restartBot: (name: string) => void;
   startCurrentBot: () => void;
+  startBot: (name: string) => void;
+  botNameExists: (name: string) => boolean;
+  createBot: (data: {name: string, token: string}) => void;
+  changeSelectedBot: (name: string) => void;
 
   getPage: (name: string) => string;
+  getModal: (name: string) => string;
 
   getKnownEventList: () => string[];
   editEvent: (name: string) => void;

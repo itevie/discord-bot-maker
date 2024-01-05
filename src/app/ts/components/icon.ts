@@ -10,7 +10,7 @@ export default function createIcon(name: string, options: IconData = {}) {
   const icon = document.createElement("div");
   icon.classList.add("icon");
 
-  if (name === "replay")
+  if (name === "replay" || name == "open_in_new")
     icon.classList.add("replay-icon");
 
   // Add options

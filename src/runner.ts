@@ -1,9 +1,10 @@
 import * as database from "./database";
-import Discord from "discord.js";
+import Discord, { Application } from "discord.js";
 import { RunnerError } from "./errors/RunnerError";
 import Logger from "./Logger";
 import handle from "./discord/handle";
 import { Bot } from "./types";
+import ApplicationError from "./errors/ApplicationError";
 
 export interface RunningBotData {
   data: Bot;
@@ -93,6 +94,64 @@ export function stopBot(name: string): void {
   bot.client.destroy();
   bot.logger.log(`Stopped`);
   removeBot(name);
+}
+
+/**
+ * 
+ * @param name 
+ * @param token
+ */
+export function createBot(name: string, token: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    logger.log(`Attempting to create bot: ${name}`);
+
+    // Check if the bot name already exists
+    if (database.data.bots.hasOwnProperty(name))
+      reject(new ApplicationError(`EA0`));
+  
+    // Create the client to see if it can login
+    const intents = [];
+    intents.push(Discord.GatewayIntentBits.MessageContent);
+    intents.push(Discord.GatewayIntentBits.GuildMessages);
+    intents.push(Discord.GatewayIntentBits.Guilds);
+    const bot = new Discord.Client({
+      intents,
+    });
+  
+    bot.on("ready", data => {
+      logger.log(`Successful login for bot ${data.user.username} (${name})`);
+
+      // Create the bot data
+      const botData: Bot = {
+        name,
+        token,
+        createdAt: new Date(),
+        eventListeners: {},
+        settings: {
+          prefix: "!",
+          slashCommands: false,
+          onlySlashCommands: false,
+          ignoreSelf: true,
+        }
+      };
+
+      // Add to DB
+      database.data.bots[name] = botData;
+      database.data.selectedBot = name;
+      resolve();
+    });
+  
+    logger.log(`Attempting token validation for bot: ${name}`)
+    bot.login(token).catch(err => {
+      // Check if it was an invalid token error
+      if ((err.message as string).includes("invalid token")) {
+        reject(new ApplicationError("EA2"));
+      } else {
+        // Unknown error found
+        reject(new ApplicationError("EA3"));
+      }
+    });
+  });
 }
 
 export function getRunningBotList(): Map<string, RunningBotData> {

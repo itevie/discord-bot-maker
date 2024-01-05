@@ -3,6 +3,7 @@ import ipc from "../ipc.js";
 import { translateElements, translateKey } from "../locale_manager.js";
 let runningBotData = [];
 let currentBot;
+let oldData = "";
 export function init() {
     updateBotList();
     setupTable();
@@ -16,13 +17,28 @@ export function init() {
     }, 500);
 }
 export function setupTable() {
+    console.log(JSON.stringify(runningBotData));
+    if (oldData == JSON.stringify(runningBotData))
+        return;
+    oldData = JSON.stringify(runningBotData);
+    console.log(runningBotData);
     const table = document.getElementById("bot-list");
+    table.innerHTML = "";
     for (const bot of runningBotData) {
+        console.log(bot.name, bot.isRunning);
         // Construct tr
         const tr = document.createElement("tr");
         // Construct name
         const name = document.createElement("td");
         name.innerHTML = bot.name;
+        // Construct open
+        const openContainer = document.createElement("td");
+        const open = createIcon("open_in_new", {
+            title: "page.bot_selection.button.open_bot",
+            isSmall: true,
+        });
+        openContainer.appendChild(open);
+        open.onclick = () => ipc.changeSelectedBot(bot.name);
         // Construct start / stop
         const startStop = document.createElement("td");
         const start = createIcon("play_arrow", {
@@ -30,16 +46,15 @@ export function setupTable() {
             isSmall: true,
             class: ["bg-hover-success"]
         });
-        start.setAttribute("data-current-bot", "hide-if-running");
-        start.setAttribute("data-current-bot-display", "inline");
+        start.onclick = () => ipc.startBot(bot.name);
+        start.style.display = bot.isRunning ? "none" : "inline";
         const stop = createIcon("stop", {
             title: `page.bot_selection.button.stop_bot`,
             isSmall: true,
             hidden: true,
             class: ["bg-hover-danger"]
         });
-        stop.setAttribute("data-current-bot", "show-if-running");
-        stop.setAttribute("data-current-bot-display", "inline");
+        stop.style.display = bot.isRunning ? "inline" : "none";
         startStop.appendChild(start);
         startStop.appendChild(stop);
         // Construct start button
@@ -50,8 +65,7 @@ export function setupTable() {
             hidden: true,
             class: ["bg-hover-danger"]
         });
-        restart.setAttribute("data-current-bot", "show-if-running");
-        restart.setAttribute("data-current-bot-display", "inline");
+        restart.style.display = bot.isRunning ? "inline" : "none";
         restart.onclick = () => ipc.restartCurrentBot();
         restartContainer.appendChild(restart);
         translateElements([start, stop, restart], {
@@ -59,6 +73,7 @@ export function setupTable() {
         });
         // Add stuff
         tr.appendChild(name);
+        tr.appendChild(openContainer);
         tr.appendChild(startStop);
         tr.appendChild(restartContainer);
         // Add to table
@@ -68,6 +83,7 @@ export function setupTable() {
 export function updateBotList() {
     runningBotData = ipc.getBotList();
     currentBot = ipc.getCurrentBot();
+    setupTable();
     updateUI();
 }
 export function updateUI() {

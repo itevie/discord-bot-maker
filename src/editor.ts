@@ -8,7 +8,7 @@ import LexerError from "./language/lexer/LexerError";
 import Parser from "./language/parser/Parser";
 const logger = new Logger("editor");
 
-const editors: {[key: string]: BrowserWindow} = {};
+let editors: {[key: string]: BrowserWindow} = {};
 
 export function loadEventEditor(eventName: string) {
   // Check if already open
@@ -20,6 +20,7 @@ export function loadEventEditor(eventName: string) {
 
   // Check if the event is there
   if (!database.data.bots[database.data.selectedBot].eventListeners[eventName]) {
+    logger.log(`The event ${eventName} was created`);
     database.data.bots[database.data.selectedBot].eventListeners[eventName] = {
       code: {
         code: "",
@@ -94,3 +95,13 @@ ipcMain.on("editor:update-code", (event, data: { type: "event" | "command", name
     };
   }
 });
+
+export function closeAllWindows() {
+  logger.log(`Closing ${Object.keys(editors).length} editors`);
+  
+  for (const i in editors) {
+    editors[i].close();
+  }
+
+  editors = {};
+}

@@ -4,8 +4,15 @@ import { hideAll } from "../util/data_div.js";
 export function loadPage(name, options) {
     const pageData = ipc.getPage(name);
     hideAll();
+    // Check if the page already exists
+    if (document.getElementById(`page-${name}`)) {
+        hideAll();
+        document.getElementById(`page-${name}`).style.display = "block";
+        return;
+    }
     // Create container
     const container = document.createElement("div");
+    container.id = `page-${name}`;
     container.innerHTML = pageData;
     updateTranslations(container);
     // Apply options

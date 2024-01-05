@@ -1,4 +1,4 @@
-import { app, BrowserWindow} from "electron";
+import { app, BrowserWindow, ipcMain} from "electron";
 import * as path from "path";
 
 /* 
@@ -21,8 +21,10 @@ import * as database from "./database";
 import "./ipc";
 import Logger from "./Logger";
 import { showBasicMessage } from "./alerts";
+import ApplicationError from "./errors/ApplicationError";
 
 database.setup();
+const logger = new Logger("main");
 
 
 let window: BrowserWindow;
@@ -30,7 +32,7 @@ let window: BrowserWindow;
 /**
  * Creates the electron window
  */
-function createWindow() {
+function createWindow(callback: (() => void) | null = null) {
   // Create the browser window
   window = new BrowserWindow({
     show: false,
@@ -57,6 +59,9 @@ function createWindow() {
     __app.getWindow = () => {
       return window;
     }
+
+    if (callback)
+      callback();
   });
 }
 
@@ -75,4 +80,26 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+});
+
+process.on("uncaughtException", error => {
+  logger.log(`CRITICAL UNCAUGHT ERROR: ` + error.message);
+  logger.log(`Recreating main window`);
+
+  const oldWindow = __app.getWindow();
+  createWindow(() => {
+    if (error instanceof ApplicationError) {
+      __app.getWindow().webContents.send(`alerts:uncaught_error`, {
+        error_code: error.errorCode,
+        stack: error.stack,
+      });
+    } else {
+      __app.getWindow().webContents.send(`alerts:unknown_uncaught_error`, {
+        message: error.message,
+        stack: error.stack,
+      });
+    }
+  });
+    
+  oldWindow.close();
 });

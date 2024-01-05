@@ -8,9 +8,15 @@ contextBridge.exposeInMainWorld("ipcApi", {
   getBotList: () => ipcRenderer.sendSync("db:get-bot-list", null),
   getCurrentBot: () => ipcRenderer.sendSync("bot:get-current-bot", null),
   restartCurrentBot: () => ipcRenderer.send("bot:restart-current-bot", null),
+  restartBot: (name: string) => ipcRenderer.send("bot:restart-bot", name),
   startCurrentBot: () => ipcRenderer.send("bot:start-current-bot", null),
+  startBot: (name) => ipcRenderer.send("bot:start-bot", name),
+  botNameExists: (name) => ipcRenderer.sendSync("bot:name-exists", name),
+  createBot: (data) => ipcRenderer.send("bot:create", data),
+  changeSelectedBot: (data: string) => ipcRenderer.send("bot:change-selected", data),
 
   getPage: (name: string) => ipcRenderer.sendSync("get-page", name),
+  getModal: (name: string) => ipcRenderer.sendSync("get-modal", name),
 
   getKnownEventList: () => ipcRenderer.sendSync("events:get-known-list", null),
   editEvent: (name: string) => ipcRenderer.send("events:edit", name),

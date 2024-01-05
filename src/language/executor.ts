@@ -6,8 +6,9 @@ import Environment from "./runtime/Environment";
 import interpret from "./runtime/interpreter";
 import util from "util";
 import { languageFeatures } from "../plugin_manager";
-import { RuntimeValue, ValidTypeUnion, createValue } from "./runtime/values";
+import { RuntimeValue, ValidTypeUnion, createNull, createValue } from "./runtime/values";
 import { Code } from "../types";
+import { handleError } from "../errors/helpers";
 
 export default function execute(code: Code, context: Context): RuntimeValue {
   // Parse source
@@ -34,5 +35,14 @@ export default function execute(code: Code, context: Context): RuntimeValue {
   }
 
   // Interpret
-  return interpret(astTree, environment);
+  let value;
+  
+  try {
+    value = interpret(astTree, environment);
+  } catch (err) {
+    handleError(err);
+    return createNull();
+  }
+
+  return value;
 }

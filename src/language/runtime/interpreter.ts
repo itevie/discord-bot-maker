@@ -6,6 +6,7 @@ import * as statements from "./handlers/statements";
 import * as literals from "./handlers/literals";
 import * as expressions from "./handlers/expressions";
 import { RuntimeValue } from "./values";
+import ErrorCode from "../errorCode";
 
 export default function interpret(expression: nodes.Expression, environment: Environment): RuntimeValue {
   switch (expression.kind) {
@@ -37,6 +38,6 @@ export default function interpret(expression: nodes.Expression, environment: Env
 
     // ----- Unknown -----
     default:
-      throw new RuntimeError(`Cannot handle a ${Kind[expression.kind]}`, expression.location);
+      throw new RuntimeError(ErrorCode.unknownAst, expression.location, { node: Kind[expression.kind] });
   }
 }

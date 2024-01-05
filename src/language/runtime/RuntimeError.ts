@@ -1,10 +1,9 @@
+import LanguageError from "../LanguageError";
+import { Values } from "../errorCode";
 import Location from "../lexer/Location";
 
-export default class RuntimeError extends Error {
-  location: Location;
-
-  constructor(message: string, location: Location) {
-    super(message);
-    this.location = location;
+export default class RuntimeError extends LanguageError {
+  constructor(errorCode: Values, location: Location, extraData: {[key: string]: string} = {}) {
+    super(errorCode, location, extraData);
   }
 }

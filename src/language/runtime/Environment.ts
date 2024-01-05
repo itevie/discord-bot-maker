@@ -2,6 +2,7 @@ import Context from "../context";
 import RuntimeError from "./RuntimeError";
 import * as values from "./values";
 import Location from "../lexer/Location";
+import ErrorCode from "../errorCode";
 
 export default class Environment {
   private parent: Environment | undefined;
@@ -34,11 +35,11 @@ export default class Environment {
     // Check if this env has it
     if (this.variables.has(name))
       return this.variables.get(name);
-    else if (this.parent && this.parent.variables.has(name))
-      return this.parent.variables.get(name);
+    else if (this.parent)
+      return this.parent.lookupVariable(name, location);
 
     // No env has this identifier
-    throw new RuntimeError(`Cannot find the variable: ${name}`, location);
+    throw new RuntimeError(ErrorCode.undeclaredVariable, location, { name });
   }
 
   public declareVariable(name: string, value: values.RuntimeValue) {

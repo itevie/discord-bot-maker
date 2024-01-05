@@ -277,11 +277,13 @@ export default class Parser {
     switch (this.at().type) {
       case TokenType.Identifier:
         return {
+          location: this.at().location,
           value: this.eat().value,
-          kind: Kind.Identifier
+          kind: Kind.Identifier,
         } as nodes.Identifier;
       case TokenType.String:
         return {
+          location: this.at().location,
           value: this.eat().value,
           kind: Kind.String,
         } as nodes.String;

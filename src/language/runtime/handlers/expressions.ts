@@ -1,3 +1,4 @@
+import ErrorCode from "../../errorCode";
 import Kind from "../../parser/Kind";
 import {AssignmentExpression, EchoStatement, Identifier, CallExpression, MemberExpression, IsExpression} from "../../parser/nodes";
 import Environment from "../Environment";
@@ -7,7 +8,7 @@ import { NativeFunctionValue, ObjectValue, RuntimeValue, createBoolean, createNu
 
 export function evaluateAssignmentExpression(expression: AssignmentExpression, environment: Environment): RuntimeValue {
   if (expression.left.kind !== Kind.Identifier)
-    throw new RuntimeError(`Cannot assign to ${expression.left.kind}`, expression.left.location);
+    throw new RuntimeError(ErrorCode.invalidAssignment, expression.left.location);
   environment.declareVariable((expression.left as Identifier).value, interpret(expression.right, environment));
   return createNull();
 }
@@ -15,14 +16,14 @@ export function evaluateAssignmentExpression(expression: AssignmentExpression, e
 export function evaluateMemberExpression(expression: MemberExpression, environment: Environment): RuntimeValue {
   // Check right
   if (expression.right.kind !== Kind.Identifier)
-    throw new RuntimeError(`This must be an identifier`, expression.right.location);
+    throw new RuntimeError(ErrorCode.invalidRightMemberExpression, expression.right.location);
 
   // Get the left
   let left = interpret(expression.left, environment) as ObjectValue;
 
   // Check it is an object
   if (left.type != "object")
-    throw new RuntimeError(`Can only get sub values from an object type, but got ${left.type}`, expression.left.location);
+    throw new RuntimeError(ErrorCode.invalidMemberExpressionAccessee, expression.left.location, { left: left.type });
 
   // Check if the object contains it
   if (!left.items[(expression.right as Identifier).value])
@@ -54,7 +55,7 @@ export function evaluateCallExpression(expression: CallExpression, environment: 
 
   // Check type
   if (func.type !== "nativeFunction") {
-    throw new RuntimeError(`Cannot call a ${func.type}, can only call functions`, expression.left.location);
+    throw new RuntimeError(ErrorCode.invalidTypeCall, expression.left.location, { type: func.type });
   }
 
   let args: RuntimeValue[] = [];
