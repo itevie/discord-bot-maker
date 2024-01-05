@@ -11,9 +11,13 @@ contextBridge.exposeInMainWorld("ipcApi", {
   restartBot: (name: string) => ipcRenderer.send("bot:restart-bot", name),
   startCurrentBot: () => ipcRenderer.send("bot:start-current-bot", null),
   startBot: (name) => ipcRenderer.send("bot:start-bot", name),
+  stopCurrentBot: () => ipcRenderer.send("bot:stop-current-bot", null),
+  stopBot: (name) => ipcRenderer.send("bot:stop-bot", name),
   botNameExists: (name) => ipcRenderer.sendSync("bot:name-exists", name),
   createBot: (data) => ipcRenderer.send("bot:create", data),
   changeSelectedBot: (data: string) => ipcRenderer.send("bot:change-selected", data),
+  getGuildList: (data: string) => ipcRenderer.sendSync("bot:get-bot-guilds", data),
+  leaveServer: (bot, guild) => ipcRenderer.sendSync("bot:leave-server", {bot,guild}),
 
   getPage: (name: string) => ipcRenderer.sendSync("get-page", name),
   getModal: (name: string) => ipcRenderer.sendSync("get-modal", name),

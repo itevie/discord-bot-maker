@@ -1,6 +1,7 @@
 import createIcon from "../components/icon.js";
 import ipc, {Bot, RunningBotItem} from "../ipc.js";
 import { translateElement, translateElements, translateKey } from "../locale_manager.js";
+import { registerContextMenu } from "../util/contextMenus.js";
 import { formatMilliseconds, gatherUnits } from "../util/formatters.js";
 
 let runningBotData: RunningBotItem[] = [];
@@ -22,16 +23,22 @@ export function init() {
 }
 
 export function setupTable() {
-  console.log(JSON.stringify(runningBotData))
   if (oldData == JSON.stringify(runningBotData))
     return;
   oldData = JSON.stringify(runningBotData);
-  console.log(runningBotData) 
+
+  renderServerList();
 
   const table = document.getElementById("bot-list");
   table.innerHTML = "";
   for (const bot of runningBotData) {
-    console.log(bot.name, bot.isRunning);
+    // Check if the current loop is the current selected bot
+    if (bot.name == currentBot.name && bot.user != null) {
+      // Set the items in the bot settings
+      (document.getElementById("bot_settings-user-pfp") as HTMLImageElement).src = bot.user.avatar;
+      document.getElementById("bot_settings-user-username").innerHTML = bot.user.username;
+    }
+
     // Construct tr
     const tr = document.createElement("tr");
 
@@ -65,6 +72,7 @@ export function setupTable() {
       class: ["bg-hover-danger"]
     });
     stop.style.display = bot.isRunning ? "inline" : "none";
+    stop.onclick = () => ipc.stopBot(bot.name);
 
     startStop.appendChild(start);
     startStop.appendChild(stop);
@@ -78,7 +86,7 @@ export function setupTable() {
       class: ["bg-hover-danger"]
     });
     restart.style.display = bot.isRunning ? "inline" : "none";
-    restart.onclick = () => ipc.restartCurrentBot();
+    restart.onclick = () => ipc.restartBot(bot.name);
     restartContainer.appendChild(restart);
 
     translateElements([start, stop, restart], {
@@ -101,6 +109,57 @@ export function updateBotList() {
   currentBot = ipc.getCurrentBot();
   setupTable();
   updateUI();
+}
+
+export function renderServerList() {
+  // Update the server list
+  const servers = ipc.getGuildList(currentBot.name);
+  document.getElementById("server-container").innerHTML = "";
+
+  for (const i in servers) {
+    // Create container
+    const container = document.createElement("div");
+    container.classList.add("bot_settings-area");
+
+    registerContextMenu({
+      attachTo: container,
+      items: [
+        {
+          type: "button",
+          content: `${servers[i].name}`,
+          disabled: true,
+        },
+        {
+          type: "seperator",
+        },
+        {
+          type: "button",
+          content: "Leave Server",
+          danger: true,
+          click: () => {
+            ipc.leaveServer(currentBot.name, servers[i].id);
+            renderServerList();
+          }
+        }
+      ]
+    });
+
+    // Add icon
+    const image = document.createElement("img");
+    image.classList.add("pfp");
+    image.src = servers[i].avatar;
+    container.appendChild(image);
+    image.onerror = () => image.src = '../icons/discord_pfp_0.png';
+
+    // Add name
+    const name = document.createElement("div");
+    name.classList.add("header");
+    name.innerHTML = servers[i].name;
+    container.appendChild(name);
+
+    // Add to actual container
+    document.getElementById("server-container").appendChild(container);
+  }
 }
 
 export function updateUI() {

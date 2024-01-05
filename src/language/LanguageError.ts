@@ -6,6 +6,7 @@ export default class LanguageError extends Error {
   errorCode: typeof ErrorCode[Keys] = ErrorCode.unknownLexerError;
   context: {[key: string]: string} = {};
   location: Location;
+  quickFixes: { name: string, actions: string[] }[] = [];
 
   constructor(errorCode: typeof ErrorCode[Keys], location: Location, context: {[key: string]: string} = {}) {
     super(`${Object.keys(ErrorCode).find(key => ErrorCode[key] === errorCode)}`);
@@ -22,6 +23,7 @@ export default class LanguageError extends Error {
       stack: this.stack.toString(),
       location: this.location,
       message: this.message,
+      quickFixes: this.quickFixes,
     }
   }
 }

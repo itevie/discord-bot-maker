@@ -4,32 +4,32 @@ import interpret from "../interpreter";
 import { RuntimeValue, createNull } from "../values";
 import { booleanise } from "../utils";
 
-export function evaluateProgramStatement(expression: Program, environment: Environment): RuntimeValue {
+export async function evaluateProgramStatement(expression: Program, environment: Environment): Promise<RuntimeValue> {
   let lastValue: RuntimeValue = createNull();
-  for (const statement of expression.body) {
-    lastValue = interpret(statement, environment);
+  for await (const statement of expression.body) {
+    lastValue = await interpret(statement, environment);
   }
 
   return lastValue;
 }
 
-export function evaluateBlockStatement(expression: Body, environment: Environment): RuntimeValue {
+export async function evaluateBlockStatement(expression: Body, environment: Environment): Promise<RuntimeValue> {
   let lastValue: RuntimeValue = createNull();
-  for (const statement of expression.body) {
-    lastValue = interpret(statement, environment);
+  for await (const statement of expression.body) {
+    lastValue = await interpret(statement, environment);
   }
 
   return lastValue;
 }
 
-export function evaluatePrintStatement(expression: EchoStatement, environment: Environment): RuntimeValue {
-  const value = interpret(expression.right, environment);
+export async function evaluatePrintStatement(expression: EchoStatement, environment: Environment): Promise<RuntimeValue> {
+  const value = await interpret(expression.right, environment);
   environment.getContext().langLogger.log((value as any).value);
   return createNull();
 }
 
-export function evaluateIfStatement(expression: IfStatement, environment: Environment): RuntimeValue {
-  const value = interpret(expression.test, environment);
+export async function evaluateIfStatement(expression: IfStatement, environment: Environment): Promise<RuntimeValue> {
+  const value = await interpret(expression.test, environment);
   const truthy = booleanise(value).value;
 
   if (truthy) {

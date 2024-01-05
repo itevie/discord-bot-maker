@@ -26,6 +26,12 @@ function loadEvent(name: string): void {
   let el = document.getElementById("current-event-name");
   el.setAttribute("data-i18n-text", `event_names.${name}`);
   translateElement(el);
+
+  document.getElementById("event-content").style.display = "block";
+
+  document.getElementById("current-event-edit").onclick = () => {
+    editEvent(name);
+  }
 }
 
 export function editEvent(name: string): void {

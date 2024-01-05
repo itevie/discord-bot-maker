@@ -171,7 +171,7 @@ export interface NativeFunctionArgument {
   type: LangaugeType;
 }
 
-export type FunctionCall = (args: RuntimeValue[], environment: Environment) => RuntimeValue;
+export type FunctionCall = (args: RuntimeValue[], environment: Environment) => Promise<RuntimeValue>;
 
 export interface RuntimeValue {
   type: ValueType;

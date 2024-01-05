@@ -25,6 +25,7 @@ export function lex(source: string, origin: string): Token[] {
       charStart: lineIndex,
       charEnd: lineIndex,
       line: currentLine,
+      origin,
     }
 
     /**
@@ -141,6 +142,7 @@ export function lex(source: string, origin: string): Token[] {
         charEnd: lineIndex,
         charStart: lineIndex,
         line: currentLine,
+        origin,
       },
     });
 
@@ -150,6 +152,7 @@ export function lex(source: string, origin: string): Token[] {
       charEnd: lineIndex,
       charStart: lineIndex,
       line: currentLine,
+      origin,
     },
     value: "",
     type: TokenType.EOF,

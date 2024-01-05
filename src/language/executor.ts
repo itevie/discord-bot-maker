@@ -9,8 +9,9 @@ import { languageFeatures } from "../plugin_manager";
 import { RuntimeValue, ValidTypeUnion, createNull, createValue } from "./runtime/values";
 import { Code } from "../types";
 import { handleError } from "../errors/helpers";
+import LanguageError from "./LanguageError";
 
-export default function execute(code: Code, context: Context): RuntimeValue {
+export default async function execute(code: Code, context: Context): Promise<RuntimeValue> {
   // Parse source
   const astTree = code.prelexed ? code.prelexed : new Parser().produceAST(code.code, context.origin);
 
@@ -35,14 +36,8 @@ export default function execute(code: Code, context: Context): RuntimeValue {
   }
 
   // Interpret
-  let value;
-  
-  try {
-    value = interpret(astTree, environment);
-  } catch (err) {
-    handleError(err);
-    return createNull();
-  }
+  let value = await interpret(astTree, environment);
+
 
   return value;
 }

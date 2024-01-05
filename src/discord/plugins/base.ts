@@ -1,4 +1,4 @@
-import api, { NumberValue, StringValue } from "../../plugin_api/interface";
+import api, { NumberValue, RuntimeValue, StringValue } from "../../plugin_api/interface";
 
 const pkg: api = {
   name: "base",
@@ -10,7 +10,7 @@ const pkg: api = {
         values: {
           string: {
             description: "features.global.string.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "string",
                 value: (args[0] as any).value.toString(),
@@ -19,6 +19,19 @@ const pkg: api = {
             options: {
               args: [{ type: "any", name: "to_convert" }]
             }
+          },
+          wait: {
+            description: "features.global.wait.description",
+            value: (args, environment): Promise<RuntimeValue> => {
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve({type: "null"});
+                }, 1000);
+              });
+            },
+            options: {
+              args: [{ type: "number", name: "time_in_ms" }]
+            }
           }
         }
       },
@@ -26,7 +39,7 @@ const pkg: api = {
         values: {
           from: {
             description: "features.numbers.from.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "number",
                 value: parseFloat((args[0] as StringValue).value)
@@ -43,7 +56,7 @@ const pkg: api = {
         values: {
           lower: {
             description: "features.strings.lower.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "string",
                 value: ((args[0] as StringValue).value ?? "").toLowerCase(),
@@ -55,7 +68,7 @@ const pkg: api = {
           },
           upper: {
             description: "features.strings.upper.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "string",
                 value: ((args[0] as StringValue).value ?? "").toUpperCase(),
@@ -67,7 +80,7 @@ const pkg: api = {
           },
           length: {
             description: "features.strings.length.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "number",
                 value: ((args[0] as StringValue).value ?? "").length
@@ -79,7 +92,7 @@ const pkg: api = {
           },
           join: {
             description: "features.strings.join.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               let done = args.map(x => (x as any)?.value || "").join("");
               return {
                 type: "string",
@@ -92,7 +105,7 @@ const pkg: api = {
           },
           ends_with: {
             description: "features.strings.ends_with.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "boolean",
                 value: ((args[0] as StringValue).value).endsWith((args[1] as StringValue).value),
@@ -104,7 +117,7 @@ const pkg: api = {
           },
           starts_with: {
             description: "features.strings.starts_with.description",
-            value: (args, environment) => {
+            value: async (args, environment) => {
               return {
                 type: "boolean",
                 value: ((args[0] as StringValue).value).startsWith((args[1] as StringValue).value),

@@ -13,6 +13,7 @@ import initActionPalette from "./action_palette.js";
 import { error } from "./util/alerts.js";
 import loadModal from "./modals/modal_manager.js";
 import { createLocation } from "./helpers.js";
+import handleLanguageError from "./error_manager.js";
 
 let loggerDiv;
 
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     ipc.addEventListener("alerts:uncaught_language_error", data => {
-      console.log(data);
+      handleLanguageError(data);
       loadModal("language_error", {
         data: {
           contents: `Error: ${translateKey(`errors:${data.errorCode}`, data.context)}<br>${createLocation(data)}`,
@@ -107,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("restart-current-bot-ion").onclick = () => ipc.restartCurrentBot();
     document.getElementById("start-current-bot-icon").onclick = () => ipc.startCurrentBot();
+    document.getElementById("stop-current-bot-icon").onclick = () => ipc.stopCurrentBot();
 
     updateTranslations();
   });

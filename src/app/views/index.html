@@ -113,7 +113,7 @@
               play_arrow
             </span>
           </div>
-          <div class="icon bg-hover-danger" data-i18n-title="topbar.tooltips.stop_bot" data-current-bot="show-if-running" data-current-bot-display="inline">
+          <div class="icon bg-hover-danger" id="stop-current-bot-icon" data-i18n-title="topbar.tooltips.stop_bot" data-current-bot="show-if-running" data-current-bot-display="inline">
             <span class="material-symbols-outlined">
               stop
             </span>
@@ -138,6 +138,24 @@
         <!-- Bot Settings -->
         <div data-div-id="bot-settings">
           <h1 data-i18n-text="page.bot_settings.header"></h1>
+          <div class="bot_settings-area">
+            <img id="bot_settings-user-pfp" class="pfp" src="a" onerror="this.src='../icons/discord_pfp_0.png'">
+            <div>
+              <p id="bot_settings-user-username" class="header">username</p>
+            </div>
+          </div>
+          <h2 data-div-collapse="bot-settings-servers">
+            <label data-i18n-text="page.bot_settings.servers.header"></label>
+            <span class="material-symbols-outlined fold-indicator">
+              chevron_right
+            </span>
+          </h2>
+          <div id="bot-settings-servers" style="display: block">
+            <label data-i18n-text="page.bot_settings.servers.information"></label>
+            <div id="server-container">
+
+            </div>
+          </div>
         </div>
 
         <!-- Commands -->
@@ -166,8 +184,9 @@
           <div class="commands-page-container">
             <div class="commands-list" id="events-list">
             </div>
-            <div class="commands-content">
+            <div class="commands-content" id="event-content" style="display: none">
               <label id="current-event-name" class="header"></label>
+              <button class="primary" id="current-event-edit" data-i18n-text="page.events.edit_current"></button>
             </div>
           </div>
         </div>
@@ -195,15 +214,8 @@
         <div data-div-id="errors">
           <h1 data-i18n-text="page.errors.header"></h1>
           <p data-i18n-text="page.errors.information"></p>
-          <div class="errors-list-container">
-            <div class="error-item">
-              <label class="error-header">Language Error (events:messageCreate)</label>
-              <label class="error-content">Lorem ipsum dolar sit amet, consecuter your mother is gay</label>
-              <div class="error-actions">
-                <button>Open Editor</button>
-                <button>Delete Error</button>
-              </div>
-            </div>
+          <div id="errors-list" class="errors-list-container">
+            
           </div>
         </div>
 

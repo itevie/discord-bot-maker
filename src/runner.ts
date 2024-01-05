@@ -5,6 +5,7 @@ import Logger from "./Logger";
 import handle from "./discord/handle";
 import { Bot } from "./types";
 import ApplicationError from "./errors/ApplicationError";
+import { handleError } from "./errors/helpers";
 
 export interface RunningBotData {
   data: Bot;
@@ -77,7 +78,7 @@ export function startBot(botName: string): void {
   // Try to connect
   bot.login(botData.token).catch(e => {
     removeBot(botName);
-    console.log("Failed to connect: " + e.message);
+    handleError(e);
   });
 }
 

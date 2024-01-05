@@ -6,20 +6,20 @@ import RuntimeError from "../RuntimeError";
 import interpret from "../interpreter";
 import { NativeFunctionValue, ObjectValue, RuntimeValue, createBoolean, createNull } from "../values";
 
-export function evaluateAssignmentExpression(expression: AssignmentExpression, environment: Environment): RuntimeValue {
+export async function evaluateAssignmentExpression(expression: AssignmentExpression, environment: Environment): Promise<RuntimeValue> {
   if (expression.left.kind !== Kind.Identifier)
     throw new RuntimeError(ErrorCode.invalidAssignment, expression.left.location);
-  environment.declareVariable((expression.left as Identifier).value, interpret(expression.right, environment));
+  environment.declareVariable((expression.left as Identifier).value, await interpret(expression.right, environment));
   return createNull();
 }
 
-export function evaluateMemberExpression(expression: MemberExpression, environment: Environment): RuntimeValue {
+export async function evaluateMemberExpression(expression: MemberExpression, environment: Environment): Promise<RuntimeValue> {
   // Check right
   if (expression.right.kind !== Kind.Identifier)
     throw new RuntimeError(ErrorCode.invalidRightMemberExpression, expression.right.location);
 
   // Get the left
-  let left = interpret(expression.left, environment) as ObjectValue;
+  let left = await interpret(expression.left, environment) as ObjectValue;
 
   // Check it is an object
   if (left.type != "object")
@@ -31,9 +31,9 @@ export function evaluateMemberExpression(expression: MemberExpression, environme
   return left.items[(expression.right as Identifier).value];
 }
 
-export function evaluateIsExpression(expression: IsExpression, environment: Environment): RuntimeValue {
-  let left = interpret(expression.left, environment);
-  let right = interpret(expression.right, environment);
+export async function evaluateIsExpression(expression: IsExpression, environment: Environment): Promise<RuntimeValue> {
+  let left = await interpret(expression.left, environment);
+  let right = await interpret(expression.right, environment);
 
   // Check types
   if (left.type != right.type)
@@ -49,9 +49,9 @@ export function evaluateIsExpression(expression: IsExpression, environment: Envi
   return createBoolean(expression.isReverted ? !result : result);
 }
 
-export function evaluateCallExpression(expression: CallExpression, environment: Environment): RuntimeValue {
+export async function evaluateCallExpression(expression: CallExpression, environment: Environment): Promise<RuntimeValue> {
   // Try get the function
-  let func = interpret(expression.left, environment);
+  let func = await interpret(expression.left, environment);
 
   // Check type
   if (func.type !== "nativeFunction") {
@@ -61,7 +61,7 @@ export function evaluateCallExpression(expression: CallExpression, environment: 
   let args: RuntimeValue[] = [];
 
   for (const arg of expression.arguments) {
-    args.push(interpret(arg, environment));
+    args.push(await interpret(arg, environment));
   }
 
   // Run it

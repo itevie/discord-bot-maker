@@ -19,6 +19,10 @@ $icon-text-size-small: 1.6em;
   transition: 0.2s;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  @include util.no-select();
+}
+
 .navbar-selected {
   background-color: colors.color("icon-selected");
 }
@@ -51,4 +55,15 @@ $icon-text-size-small: 1.6em;
 .replay-icon > span {
   font-size: calc($icon-text-size - 0.3em);
   padding: 6px;
+}
+
+.pfp {
+  width: 64px;
+  height: 64px;
+}
+
+.fold-indicator {
+  position: absolute;
+  margin-top: 3px;
+  margin-left: 4px;
 }

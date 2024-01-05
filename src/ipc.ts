@@ -31,6 +31,10 @@ ipcMain.on("db:get-bot-list", (event, data) => {
       name: database.data.bots[i].name,
       isRunning: runningBots.has(i),
       startedAt: runningBots.has(i) ? runningBots.get(i).startedAt : null,
+      user: runningBots.has(i) ? {
+        username: runningBots.get(i)?.client?.user?.username ?? "",
+        avatar: runningBots.get(i)?.client?.user?.avatarURL() ?? "",
+      } : null,
     });
   }
 
@@ -62,6 +66,14 @@ ipcMain.on("bot:start-bot", (event, data: string) => {
   startBot(data);
 });
 
+ipcMain.on("bot:stop-current-bot", (event, data) => {
+  stopBot(database.getCurrentBot().name);
+});
+
+ipcMain.on("bot:stop-bot", (event, data: string) => {
+  stopBot(data);
+});
+
 ipcMain.on("bot:get-current-bot", (event, data) => {
   let currentBot = database.getCurrentBot();
 
@@ -70,6 +82,42 @@ ipcMain.on("bot:get-current-bot", (event, data) => {
     return event.returnValue = null; 
   
   event.returnValue = currentBot;
+});
+
+ipcMain.on("bot:get-bot-guilds", async (event, data: string) => {
+  // Check if the bot is logged in
+  if (getRunningBotList().has(data) == false) {
+    event.returnValue = [];
+    return;
+  }
+
+  const bot = getRunningBotList().get(data);
+
+  if (!bot?.client) {
+    event.returnValue = [];
+    return;
+  }
+
+  const guilds = (await bot.client.guilds.fetch()).map(x => { return { name: x.name, avatar: x.iconURL(), id: x.id }; });
+  event.returnValue = guilds;
+});
+
+ipcMain.on("bot:leave-server", async (event, data: { bot: string, guild: string}) => {
+  // Try find the server
+  try {
+    // Check if bot is started
+    if (getRunningBotList().has(data.bot) == false)
+      throw new ApplicationError("EA0");
+
+    // Try fetch the guild
+    const bot = getRunningBotList().get(data.bot);
+    const guild = await bot.client.guilds.fetch(data.guild)
+    await (await guild.fetch()).leave();
+  } catch (err) {
+    handleError(err);
+  }
+
+  event.returnValue = "";
 });
 
 ipcMain.on("bot:name-exists", (event, data) => {
@@ -217,9 +265,9 @@ ipcMain.on("plugins:list", (event) => {
 });
 
 // ----- REPL events -----
-ipcMain.on("repl:evaluate", (event, data: string) => {
+ipcMain.on("repl:evaluate", async (event, data: string) => {
   try {
-    let value = execute({ code: data, prelexed: null }, { 
+    let value = await execute({ code: data, prelexed: null }, { 
       origin: "REPL", 
       variables: {}, 
       bot: {

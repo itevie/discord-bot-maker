@@ -7,7 +7,7 @@ export default function init() {
   document.getElementById("create-bot-button").onclick = () => {
     loadCreator();
   }
-}
+} 
 
 export function loadCreator() {
   loadPage("bot_creator", {

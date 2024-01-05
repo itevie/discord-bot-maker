@@ -4,6 +4,10 @@
   --color-text: white;
   --color-container: #333;
   --color-container-2: #444;
+  --color-popup: #111;
+  --color-popup-backdrop: #333;
+  --color-text: white;
+  --color-text-dim: #999;
   --color-icon: #fff;
   --color-icon-hover: #333;
   --color-icon-selected: #444;
@@ -81,6 +85,15 @@
   transition: 0.2s;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .navbar-selected {
   background-color: var(--color-icon-selected);
 }
@@ -113,6 +126,17 @@
 .replay-icon > span {
   font-size: 2.2em;
   padding: 6px;
+}
+
+.pfp {
+  width: 64px;
+  height: 64px;
+}
+
+.fold-indicator {
+  position: absolute;
+  margin-top: 3px;
+  margin-left: 4px;
 }
 
 input, button {
@@ -309,6 +333,7 @@ input.jumbo, button.jumbo {
 }
 
 .error-item {
+  margin: 10px;
   padding: 10px;
   border-radius: 10px;
   background-color: inherit;
@@ -375,6 +400,68 @@ input.jumbo, button.jumbo {
   margin-bottom: auto;
 }
 
+.bot_settings-area {
+  display: flex;
+}
+
+.bot_settings-area > .pfp {
+  margin: 10px;
+}
+
+.bot_settings-area > div {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.context-container {
+  /* Positioning */
+  position: absolute;
+  min-width: 200px;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  margin: 10px;
+  /* Style */
+  background-color: var(--color-popup);
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px 1px var(--color-popup-backdrop);
+  display: none;
+}
+
+.context-icon {
+  float: right;
+  margin-top: -3px;
+}
+
+.context-item, .context-item > label {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.context-item:hover {
+  background-color: var(--color-popup-hover);
+}
+
+.context-danger {
+  color: var(--color-danger);
+}
+
+.context-danger:hover {
+  color: white;
+  background-color: var(--color-danger);
+}
+
+.context-disabled, .context-disabled > label {
+  cursor: not-allowed;
+  color: var(--color-text-dim);
+}
+
+.content-disabled:hover {
+  color: inherit;
+}
+
 body {
   overflow: hidden;
   margin: 0;
@@ -396,6 +483,11 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+hr {
+  border-style: solid;
+  border-color: var(--color-container);
 }
 
 .main-content {
@@ -432,6 +524,7 @@ body {
   margin: 10px;
   font-weight: bolder;
   font-size: 2em;
+  display: block;
 }
 
 .block {

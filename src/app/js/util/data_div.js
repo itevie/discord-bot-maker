@@ -65,6 +65,17 @@ export function registerAll(defaultDiv) {
             changers[i].classList.add("navbar-selected");
         }
     }
+    let collapsers = document.querySelectorAll("[data-div-collapse]");
+    console.log(collapsers);
+    collapsers.forEach(el => {
+        const id = el.getAttribute("data-div-collapse");
+        console.log(id);
+        el.onclick = () => {
+            // Get the corrosponding element
+            const e = document.getElementById(id);
+            e.style.display = e.style.display == "block" ? "none" : "block";
+        };
+    });
 }
 function createPage(name) {
     // Check if element already exists

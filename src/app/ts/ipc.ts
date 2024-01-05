@@ -13,6 +13,10 @@ export interface RunningBotItem {
   name: string;
   isRunning: boolean;
   startedAt: number;
+  user?: {
+    username: string;
+    avatar: string;
+  }
 }
 
 export interface Bot {
@@ -28,7 +32,11 @@ export interface DError {
     charStart: number,
     charEnd: number,
     line: number,
-  }
+  },
+  quickFixes: {
+    name: string,
+    actions: string[],
+  }[];
 }
 
 export interface Events {
@@ -48,9 +56,13 @@ interface IpcApi {
   restartBot: (name: string) => void;
   startCurrentBot: () => void;
   startBot: (name: string) => void;
+  stopCurrentBot: () => void;
+  stopBot: (name: string) => void;
   botNameExists: (name: string) => boolean;
   createBot: (data: {name: string, token: string}) => void;
   changeSelectedBot: (name: string) => void;
+  getGuildList: (name: string) => { name: string, avatar: string, id: string }[];
+  leaveServer: (bot: string, guildId: string) => void;
 
   getPage: (name: string) => string;
   getModal: (name: string) => string;

@@ -22,6 +22,13 @@ function loadActions() {
             priority: 3
         },
         {
+            name: translateKey("main:action_palette.stop_current_bot", {}),
+            action: () => {
+                ipc.stopCurrentBot();
+            },
+            priority: 3
+        },
+        {
             name: translateKey("main:action_palette.restart_current_bot", {}),
             action: () => {
                 ipc.restartCurrentBot();
@@ -53,6 +60,7 @@ function loadActions() {
     for (const event of events) {
         actions.push({
             name: translateKey(`main:action_palette.edit_event`, { event_name: event }),
+            internal: `edit-event/${event}`,
             action: () => {
                 editEvent(event);
             },
@@ -74,6 +82,7 @@ function loadActions() {
     for (const bot of bots) {
         actions.push({
             name: translateKey(`main:action_palette.change_bot`, { bot_name: bot.name }),
+            internal: "select-bot/" + bot.name,
             action: () => {
                 ipc.changeSelectedBot(bot.name);
             },
@@ -140,6 +149,13 @@ function renderAction(action) {
         closePalette();
     };
     return element;
+}
+export function executeInternal(id) {
+    // Try to find the id
+    const action = actions.find(x => x.internal === id);
+    if (action) {
+        action.action();
+    }
 }
 function clean(text) {
     return text.toLowerCase().replace(/ /g, "");

@@ -10,6 +10,8 @@
 @use "elements/inputs.scss";
 @use "pages/errors.scss";
 @use "modals/modals.scss";
+@use "pages/bot-settings.scss";
+@use "./contextmenus.scss";
 
 body {
   overflow: hidden;
@@ -32,6 +34,11 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+hr {
+  border-style: solid;
+  border-color: var(--color-container);
 }
 
 .main-content {
@@ -63,6 +70,7 @@ body {
   margin: 10px;
   font-weight: bolder;
   font-size: 2em;
+  display: block;
 }
 
 .block {
